@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // 构造器
+    function Employee(name, age) {
+        this.name = name
+        this.age = age
+    }
+
+    // 将成员方法放到原型上，只占据一份空间，所有对象可以共用
+    Employee.prototype.say = function () {
+        console.log('My name is ' + this.name + ", age is " + this.age)
+    }
+
+    // 调用构造器创建对象
+    let employee1 = new Employee('lzy-1', 100)
+    let employee2 = new Employee('lzy-2', 21)
+    console.log(employee1)
+    console.log(employee2)
+
+    employee1.say()
+    employee2.say()
+</script>

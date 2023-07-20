@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+    // 重复创建，繁琐
+   /*  let employee1 = {
+        name: 'lzy-1',
+        age: 100
+    }
+
+    let employee2 = {
+        name: 'lzy-2',
+        age: 21
+    } */
+
+    // 构造器
+    function Employee(name, age){
+        this.name = name
+        this.age = age
+
+        this.say = () => {
+            console.log('My name is ' + this.name + ", age is " + this.age)
+        }
+    }
+
+    // 调用构造器创建对象
+    let employee1 = new Employee('lzy-1', 100)
+    let employee2 = new Employee('lzy-2', 21)
+    console.log(employee1)
+    console.log(employee2)
+
+    employee1.say()
+    employee2.say()
+
+    // 优点：除去重复创建的工作，而且每一个对象都能拥有独立的成员变量
+    // 缺点：成员函数没有必要为每个对象都创建一遍，这样会浪费空间资源。更好的方法是让每个对象共享一个成员函数，参见 02-原型模式/01.html
+</script>
