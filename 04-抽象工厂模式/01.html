@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    class User {
+        constructor(name, role, pages) {
+            this.name = name
+            this.role = role
+            this.pages = pages
+        }
+
+        welcome() {
+            console.log('欢迎回来，', this.name)
+        }
+
+        dataShow() {
+            throw new Error('必须在子类中实现 dataShow 方法')
+        }
+    }
+
+    class SuperAdmin extends User {
+        constructor(name) {
+            super(name, 'superadmin', ['home', 'user-manage', 'right-manage', 'news-manage'])
+        }
+
+        dataShow() {
+            console.log("superadmin-dataShow")
+        }
+
+        addUser() {}
+        addRight() {}
+    }
+
+    class Admin extends User {
+        constructor(name) {
+            super(name, 'admin', ['home', 'user-manage',  'news-manage'])
+        }
+
+        dataShow() {
+            console.log("admin-dataShow")
+        }
+
+        addUser() {}
+    }
+    
+    class Editor extends User {
+        constructor(name) {
+            super(name, 'editor', ['home',  'news-manage'])
+        }
+
+        dataShow() {
+            console.log("editor-dataShow")
+        }
+    }
+
+    function getAbstractUserFactory(role) {
+        switch(role) {
+            case "superadmin": 
+                return SuperAdmin
+            case "admin":
+                return Admin
+            case "editor":
+                return Editor
+            default:
+                return new Error("参数错误")
+        }
+    }
+
+    let UserClass = getAbstractUserFactory("admin")
+    let user = new UserClass("lzy")
+    console.log(UserClass)
+    console.log(user)
+    user.welcome()
+    user.dataShow()
+
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    class User {
+        constructor(role, pages) {
+            this.role = role
+            this.pages = pages
+        }
+
+        static UserFactory(role) {
+            switch (role) {
+                case "superadmin":
+                    return new User('superadmin', ['home', 'user-manage', 'news-manage', 'right-manage'])
+                case "admin":
+                    return new User('admin', ['home', 'user-manage', 'news-manage'])
+                case "editor":
+                    return new User('editor', ['home', 'news-manage'])
+                default:
+                    return new Error('没有此角色')
+            }
+        }
+    }
+
+    let role = User.UserFactory('admin')
+    console.log(role)
+
+    // 优点：只需一个正确的参数，就可以获取到所需要的对象，而无需知道其创建的具体细节
+    // 缺点：在工厂函数内部包含了所有对象的创建逻辑和判断逻辑的代码，每增加新的构造函数还需要修改判断逻辑代码。当我们的对象更多时，这个函数会变得很臃肿，难以维护
+    // 所以，简单工厂只能用于 创建的对象数量较少，对象的创建逻辑不复杂时 的场景
+</script>
