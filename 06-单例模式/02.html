@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // ES6 - 类
+    class Singleton {
+        constructor(name, age) {
+            if(!Singleton.instance) {
+                this.name = name 
+                this.age = age
+                Singleton.instance = this
+            }
+            return Singleton.instance
+        }
+    }
+
+    let singleton1 = new Singleton('lzy1', 21)
+    let singleton2 = new Singleton('lzy2', 22)
+    console.log(singleton1)
+    console.log(singleton1 === singleton2)  // true
+</script>

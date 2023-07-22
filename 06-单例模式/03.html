@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .model {
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            background-color: yellow;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="model">登录对话框</div> -->
+    <button id="open">打开</button>
+    <button id="close">关闭</button>
+</body>
+
+</html>
+<script>
+    // 单例模式 —— 对话框
+    const Model = (function(){
+        let instance = null
+        return function () {
+            if (!instance) {
+                // 创建单例
+                instance = document.createElement('div')
+                instance.innerHTML = "登录对话框"
+                instance.className = 'model'
+                instance.style.display = 'none'
+                document.body.appendChild(instance)
+            }
+            return instance
+        }
+    })()
+
+    document.querySelector("#open").onclick = function() {
+        const model = Model()
+        model.style.display = 'block'
+    }
+    document.querySelector("#close").onclick = function() {
+        const model = Model()
+        model.style.display = 'none'
+    }
+</script>

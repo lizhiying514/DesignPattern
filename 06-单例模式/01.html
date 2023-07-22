@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 保证一个类仅有一个实例，并提供一个访问它的全局访问点
+    // 主要解决一个全局使用的类频繁地创建和销毁，占用内存
+    // 主要应用 —— vuex 中的 store，全局对话框
+    // ES5 - 闭包
+    let Singleton = (function() {
+        let singleton = null
+
+        function User(name, age) {
+            this.name = name
+            this.age = age
+        }
+
+        return function(name, age){
+            if(singleton === null) {
+                singleton = new User(name, age)
+            }
+            return singleton
+        }
+    })()
+
+    let user1 = Singleton("lzy1", 21)
+    let user2 = Singleton("lzy2", 22)
+    console.log(user1)
+    console.log(user1 === user2)  // true
+</script>
