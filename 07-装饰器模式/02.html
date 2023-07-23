@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <Button id="filmBtn">点击</Button>
+</body>
+</html>
+<script>
+    Function.prototype.before = function(beforeFn) {
+        let _this = this  // 此处的 _this 应该是原来的函数 test
+        return function(){  // 函数 1
+            beforeFn.apply(this, arguments)
+            return _this.apply(this, arguments)
+        }
+    }
+
+    Function.prototype.after = function(afterFn) {
+        let _this = this  // 此处的 _this 应该是 before 中返回的那个 function，即 函数 1
+        return function(){
+            let result = _this.apply(this, arguments)
+            afterFn.apply(this, arguments)
+            return result
+        }
+    }
+
+
+    // 页面响应之前，可以利用 before 先记录 pv 和 uv 数据
+
+    /* const log = function() {
+        console.log("上传 pv 和 uv 数据")
+    }
+
+    let render = function() {
+        console.log("页面处理逻辑")
+    }
+
+    render = render.before(log)
+
+    filmBtn.onclick = function() {
+        render()
+    } */
+
+
+    // 发送 ajax 之前，利用 before 可以加上 token；当然，也可以不加
+
+    const ajax = function(api, method, params){
+        console.log(api, method, params)
+    }
+    ajax('/api', 'post', 'ajax-params')
+
+    const ajax1 = ajax.before(function() {
+        console.log("发送 ajax1 之前，先添加 token")
+    })
+    ajax1('/api', 'post', 'ajax1-params')
+</script>

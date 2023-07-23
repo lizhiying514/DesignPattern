@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 装饰器模式能够很好地对已有功能进行拓展，这样不会更改原有的代码，对其他的业务产生影响，这方便我们在较少的改动下对软件功能进行拓展
+
+    // test 执行之前要执行的函数
+    Function.prototype.before = function(beforeFn) {
+        let _this = this  // 此处的 _this 应该是原来的函数 test
+        console.log(arguments)  // 是传进来的函数 beforeFn
+        return function(){  // 函数 1
+            console.log(arguments)  // 是外面传的参数 a, b
+            beforeFn.apply(this, arguments)
+            return _this.apply(this, arguments)
+        }
+    }
+    
+    // test 执行之后要执行的函数
+    Function.prototype.after = function(afterFn) {
+        let _this = this  // 此处的 _this 应该是 before 中返回的那个 function，即 函数 1
+        return function(){
+            let result = _this.apply(this, arguments)
+            afterFn.apply(this, arguments)
+            return result
+        }
+    }
+
+    const test = function(a, b, c) {
+        console.log(a, b, c)
+        console.log("1111")
+        return "test-result"
+    }
+    // console.log(test(1, 2, 3))
+
+    const beforeTest = function(a, b, c) {
+        console.log(a, b, c)  // 1, 2, undefined
+        console.log("0000")
+    }
+    const afterTest = function(a, b, c) {
+        console.log(a, b, c)  // 1, 2, undefined
+        console.log("2222")
+    }
+
+    // test1 = test.before(beforeTest).after(afterTest)
+    // console.log(test1(1, 2))
+</script>
