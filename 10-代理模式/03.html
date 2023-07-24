@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
+<script>
+    let obj = {}
+
+    let proxy = new Proxy(obj, {
+        get(target, key) {
+            console.log('get', target[key])
+            return target[key]  // 返回被代理对象中的值
+        }, 
+        set(target, key, value) {
+            console.log('set', target, key, value)
+            if(key === "data") {
+                box.innerHTML = value  // 给页面设置 data
+            }
+            target[key] = value  // 更新被代理对象中的值
+        }
+    })
+</script>

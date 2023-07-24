@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reditem {
+            background-color: red;
+        }
+
+        .yellowitem {
+            background-color: yellow;
+        }
+
+        .greenitem {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="mylist">
+
+    </ul>
+</body>
+
+</html>
+<script>
+    const list = [{
+        title: "男人看了沉默",
+        type: 1
+    },
+    {
+        title: "震惊",
+        type: 2
+    },
+    {
+        title: "lzy",
+        type: 3
+    },
+    {
+        title: "zhangsan离开了",
+        type: 2
+    }
+    ]
+
+    const strategy = {
+        "1":{
+            content: '审核中',
+            className: 'yellowitem'
+        },
+        "2":{
+            content: '审核通过',
+            className: 'greenitem'
+        },
+        "3":{
+            content: '驳回',
+            className: 'reditem'
+        },
+    }
+
+    mylist.innerHTML = list.map(item => {
+        return `
+            <li>
+                <div>${item.title}</div>
+                <div class='${strategy[item.type].className}'>${strategy[item.type].content}</div>
+            </li>
+        `
+    }).join("")
+</script>

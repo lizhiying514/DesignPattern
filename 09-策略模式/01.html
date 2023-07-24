@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    /* 策略模式定义了一系列算法，并将每个算法封装起来，使它们可以互相替换，且算法的变化不会影响使用算法的客户。策略模式属于对象行为模式，它通过对算法进行封装，把使用算法的责任和算法的实现分割开来，并委派给不同的对象对这些算法进行管理。
+    该模式主要解决在有多种算法相似的情况下，使用 if...else 所带来的复杂和难以维护。它的优点是算法可以自由切换，同时可以避免多重 if...else 判断，且具有良好的扩展性 */
+
+    let strategy = {
+        "S": (salary) => salary * 6,
+        "A": (salary) => salary * 4,
+        "B": (salary) => salary * 3,
+        "C": (salary) => salary * 2
+    }
+
+    function calBonus(level, salary) {
+        return strategy[level](salary)
+    }
+
+    console.log(calBonus("A", 6000))
+    console.log(calBonus("C", 4000))
+</script>
