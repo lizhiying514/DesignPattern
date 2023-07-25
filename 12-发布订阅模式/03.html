@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            display: flex;
+            height: 500px;
+        }
+
+        .left {
+            width: 150px;
+            background-color: skyblue;
+        }
+
+        .right {
+            flex: 1;
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">路径</div>
+    <div class="box">
+        <div class="left">
+            <ul>
+                <li>首页</li>
+                <li>用户管理</li>
+                <li>权限管理</li>
+                <li>新闻管理</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="bread"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    const PubSub = {
+        message: {},
+
+        publish(type, data) {
+            if(!this.message[type]) return
+            this.message[type].forEach(item => item(data))
+        },
+
+        subscribe(type, cb) {
+            if(!this.message[type]) {
+                this.message[type] = [cb]
+            } else {
+                this.message[type].push(cb)
+            }
+        },
+
+        unsubscribe(type, cb) {
+            if(!this.message[type]) return 
+            if(!cb) {
+                this.message[type] && (this.message[type].length = 0)
+            } else {
+                this.message[type] = this.message[type].filter(item => item !== cb)
+            }
+        }
+    }
+
+    PubSub.subscribe("UpdateBread", function(data) {
+        console.log("订阅了 UpdateBread 事件")
+        document.querySelector(".bread").innerHTML = data
+    })
+    PubSub.subscribe("UpdateHeader", function(data) {
+        console.log("订阅了 UpdateHeader 事件")
+        document.querySelector(".header").innerHTML = data
+    })
+
+    // 获取所有 li
+    const oli = document.querySelectorAll(".left li")
+    // 为每个 li 添加点击事件
+    for(let i = 0; i < oli.length; i++) {
+        oli[i].onclick = function() {
+            PubSub.publish("UpdateBread", this.innerHTML)
+            PubSub.publish("UpdateHeader", this.innerHTML)
+        }
+    }
+</script>
