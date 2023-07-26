@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // type: Model/Message/Toast
+    // animation: Bounce/Slide/Rotate
+
+    const Animations = {
+        Bounce: {
+            show(ele) {
+                console.log(ele, "弹跳显示")
+            },
+            hide(ele) {
+                console.log(ele, "弹跳隐藏")
+            }
+        },
+        Slide: {
+            show(ele) {
+                console.log(ele, "滑动显示")
+            },
+            hide(ele) {
+                console.log(ele, "滑动隐藏")
+            }
+        },
+        Rotate: {
+            show(ele) {
+                console.log(ele, "旋转显示")
+            },
+            hide(ele) {
+                console.log(ele, "旋转隐藏")
+            }
+        }
+    }
+
+    function Model(animation) {
+        this.animation = animation
+    }
+    Model.prototype.show = function() {
+        this.animation.show("Model")
+    }
+    Model.prototype.hide = function() {
+        this.animation.hide("Model")
+    }
+
+    function Message(animation) {
+        this.animation = animation
+    }
+    Message.prototype.show = function() {
+        this.animation.show("Message")
+    }
+    Message.prototype.hide = function() {
+        this.animation.hide("Message")
+    }
+
+    function Toast(animation) {
+        this.animation = animation
+    }
+    Toast.prototype.show = function() {
+        this.animation.show("Toast")
+    }
+    Toast.prototype.hide = function() {
+        this.animation.hide("Toast")
+    }
+
+
+    let model = new Model(Animations.Bounce)
+    model.show()
+    model.hide()
+
+    let message = new Message(Animations.Slide)
+    message.show()
+    message.hide()
+
+    let toast = new Toast(Animations.Rotate)
+    toast.show()
+    toast.hide()
+</script>

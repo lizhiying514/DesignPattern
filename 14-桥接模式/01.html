@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function Car(engine) {
+        this.engine = engine
+    }
+
+    Car.prototype.loadEngine = function(brand) {
+        this.engine.run(brand)
+    }
+
+    function V6() {
+        this.run = function(brand) {
+            console.log(brand, '- V6 发动机')
+        }
+    }
+    function V7() {
+        this.run = function(brand) {
+            console.log(brand, '- V7 发动机')
+        }
+    }
+    function V8() {
+        this.run = function(brand) {
+            console.log(brand, '- V8 发动机')
+        }
+    }
+
+    new Car(new V6()).loadEngine("Audi")
+    new Car(new V7()).loadEngine("BMW")
+    new Car(new V8()).loadEngine("Benz")
+
+</script>
+
+<!-- 
+    桥接模式：将抽象部分与它的实现部分分离，使它们都可以独立地变化
+    使用场景：一个类存在两个或多个独立变化的维度，且这两个维度都需要进行扩展
+
+    优点：把抽象与实现隔离开，有助于独立地管理各组成部分
+
+    缺点：每使用一个桥接元素都要增加一次函数调用，这对应用程序的性能会有一些负面影响——提高了系统的复杂程度
+ -->
