@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 宏命令 —— 组合模式 与 命令模式 的综合应用
+
+    class MacroCommand {
+        constructor() {
+            this.list = []
+        }
+
+        add(item) {
+            this.list.push(item)
+        }
+
+        execute() {
+            // console.log("执行宏命令")
+            for(let item of this.list) {
+                item.execute()
+            }
+        }
+    }
+
+    class Tabs {
+        execute() {
+            console.log("执行选项卡")
+        }
+    }
+
+    class Carousel {
+        execute() {
+            console.log("执行轮播图")
+            this.init()
+            this.getData()
+        }
+
+        init() {
+            console.log('轮播 init')
+        }
+
+        getData() {
+            console.log('轮播 getData')
+        }
+    }
+
+
+    let macroCommand = new MacroCommand()
+    let tabs = new Tabs()
+    let carousel = new Carousel()
+
+    macroCommand.add(tabs)
+    macroCommand.add(carousel)
+    
+    macroCommand.execute()
+</script>

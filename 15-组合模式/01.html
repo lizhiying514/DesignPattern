@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function Folder(folder) {
+        this.folder = folder
+        this.list = []
+    }
+
+    Folder.prototype.add = function(folder) {
+        this.list.push(folder)
+    }
+
+    Folder.prototype.scan = function() {
+        console.log("文件夹：" + this.folder)
+        for(let i=0; i<this.list.length; i++) {
+            this.list[i].scan()
+        }
+    }
+
+    function File(file) {
+        this.file = file
+    }
+
+    File.prototype.scan = function() {
+        console.log("文件：" + this.file)
+    }
+
+    let root = new Folder("root")
+    let html = new Folder("html")
+    let css = new Folder("css")
+    let js = new Folder("js")
+    root.add(html)
+    root.add(css)
+    root.add(js)
+
+    let html4 = new File("html4")
+    let html5 = new File("html5")
+    html.add(html4)
+    html.add(html5)
+
+    let css2 = new File("css2")
+    let css3 = new File("css3")
+    css.add(css2)
+    css.add(css3)
+
+    let es5 = new File("es5")
+    let es6 = new File("es6")
+    js.add(es5)
+    js.add(es6)
+
+    root.scan()
+</script>
+<!-- 
+    组合模式在对象间形成树形结构；
+    组合模式中基本对象和组合对象被一致对待；
+    无须关心对象有多少层，调用时只需在根部进行调用
+
+    它在我们树形结构的问题中，模糊了简单元素和复杂元素的概念，客户程序可以像处理简单元素一样来处理复制元素，从而使客户程序与复杂元素的内部结构解耦
+ -->

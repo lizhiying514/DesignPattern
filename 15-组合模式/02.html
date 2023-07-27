@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="root"></ul>
+</body>
+
+</html>
+<script>
+
+
+    // 创建多级菜单
+    class Component {
+        constructor(name) {
+            this.name = name
+        }
+
+        create() {
+
+        }
+    }
+
+    class Menu extends Component {
+        constructor(name) {
+            super(name)
+            this.list = []
+        }
+
+        add(component) {
+            this.list.push(component)
+        }
+
+        create(ulParent) {
+            console.log(this.name)
+            // 创建 li，并追加到父级 ul
+            let li = document.createElement("li")
+            li.innerHTML = this.name
+            ulParent.appendChild(li)
+
+            // 创建 ul，准备传给子菜单
+            let ulChild = document.createElement("ul")
+            li.appendChild(ulChild)
+
+            // 循环菜单的 子菜单 list，递归调用 create
+            for (let i = 0; i < this.list.length; i++) {
+                this.list[i].create(ulChild)
+            }
+        }
+    }
+
+    class MenuItem extends Component {
+        constructor(name) {
+            super(name)
+        }
+
+        create(ulParent) {
+            console.log(this.name)
+            // 创建 li，并追加到父级 ul
+            let li = document.createElement('li')
+            li.innerHTML = this.name
+            ulParent.appendChild(li)
+        }
+
+    }
+
+    let allManage = new Menu("所有管理")
+    let rightManage = new Menu("权限管理")
+    let userManage = new MenuItem("用户管理")
+    let roleManage = new MenuItem("角色管理")
+    let menuManage = new MenuItem("菜单管理")
+    allManage.add(rightManage)
+    rightManage.add(userManage)
+    rightManage.add(roleManage)
+    rightManage.add(menuManage)
+
+    let teacherManage = new Menu("讲师管理")
+    let teacherList = new MenuItem("讲师列表")
+    let teacherAdd = new MenuItem("添加讲师")
+    allManage.add(teacherManage)
+    teacherManage.add(teacherList)
+    teacherManage.add(teacherAdd)
+
+    let courseManage = new Menu("课程管理")
+    let courseList = new MenuItem("课程列表")
+    let courseAdd = new MenuItem("添加课程")
+    allManage.add(courseManage)
+    courseManage.add(courseList)
+    courseManage.add(courseAdd)
+
+
+    allManage.create(root)
+</script>
