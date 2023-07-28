@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    let person = {
+        name: 'lzy',
+        age: 18,
+        habbies: ['摄影', '篮球', '唱歌'],
+        [Symbol.iterator]: function() {
+            let index = 0
+            return {
+                next: () => {
+                    if(index < this.habbies.length) {
+                        return {
+                            value: this.habbies[index++],
+                            done: false
+                        }
+                    } else {
+                        return {
+                            value: undefined,
+                            done: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    let it = person[Symbol.iterator]()
+    console.log(it.next())
+    console.log(it.next())
+    console.log(it.next())
+    console.log(it.next())
+    
+    for(let habby of person) {
+        console.log(habby)
+    }
+</script>
