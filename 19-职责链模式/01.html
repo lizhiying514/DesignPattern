@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input" />
+    <button id="btn">确定</button>
+</body>
+</html>
+<script>
+    // 验证是否为空
+    function checkEmpty() {
+        if(input.value.length === 0) {
+            console.log("不能为空")
+            return
+        }
+        // 不为空则指示要进入下一步验证
+        return "next"
+    }
+
+    // 验证是否为数字
+    function checkNumber() {
+        if(Number.isNaN(+input.value)) {
+            console.log("必须为数字")
+            return
+        }
+        // 是数字则指示要进入下一步验证
+        return "next"
+    }
+
+    // 验证是否长度大于 6
+    function checkLength() {
+        if(input.value.length <= 6) {
+            console.log("长度必须大于 6")
+            return
+        }
+        // 长度大于 6 则指示要进入下一步验证
+        return "next"
+    }
+
+    class Chain {
+        constructor(checkFn) {
+            this.checkFn = checkFn || (() => "next")
+            this.nextCheck = null
+        }
+
+        check() {
+            if(this.checkFn() === "next") {
+                this.nextCheck.check()
+            }
+        }
+
+        addRule(nextCheckFn) {
+            this.nextCheck = new Chain(nextCheckFn)
+            return this.nextCheck
+        }
+
+        end() {
+            // 如果全部通过，要结束了，还是得提供一个 check() 方法，因为最后一个 验证函数 返回 "next" 时还是要通过 this.nextCheck 去调用 check() 方法，所以得将 this.nextCheck 赋值为一个对象，里面实现了 check() 方法
+            this.nextCheck = {
+                check: () => "end"
+            }
+        }
+    }
+
+    const checks = new Chain()
+    checks.addRule(checkEmpty).addRule(checkNumber).addRule(checkLength).end()
+
+    btn.onclick = () => {
+        checks.check()
+    }
+</script>
+<!-- 
+    使多个对象都有机会处理请求，从而避免了请求的发送者与多个接收者直接的耦合关系，将这些接收者连接成一条链，顺着这条链传递该请求，直到找到能处理该请求的对象
+
+    优点：
+        1. 符合单一职责，使每个方法中都只有一个职责
+        2. 符合开放封闭原则，在需求增加时可以很方便地扩充新的责任
+        3. 使用的时候不需要知道谁才是真正处理方法，减少大量的 if 或 switch 语法
+
+    缺点：
+        1. 团队成员需要对职责链存在共识，否则当看到一个方法莫名其妙地返回一个 next 时一定会很奇怪
+        2. 出错时不好排查问题，因为不知道到底在哪个责任中出的错，需要从链头开始往后找
+ -->
